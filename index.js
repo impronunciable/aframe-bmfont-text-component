@@ -25,6 +25,10 @@ AFRAME.registerComponent('bmfont-text', {
       type: 'string',
       default: 'left'
     },
+    anchor: {
+      type: 'string',
+      default: 'left'
+    },
     letterSpacing: {
       type: 'number',
       default: 0
@@ -80,6 +84,7 @@ AFRAME.registerComponent('bmfont-text', {
         text: data.text, // the string to render
         width: data.width,
         align: data.align,
+        anchor: data.anchor,
         letterSpacing: data.letterSpacing,
         lineHeight: data.lineHeight,
         mode: data.mode
@@ -104,6 +109,9 @@ AFRAME.registerComponent('bmfont-text', {
 
       // Scale text down
       text.scale.multiplyScalar(-0.005);
+
+      // Update position based on anchor
+      updateAnchorPosition(text, geometry, data.anchor);
 
       // Register text mesh under entity's object3DMap
       el.setObject3D('bmfont-text', text);
@@ -134,4 +142,26 @@ function fontLoader (opt, cb) {
       cb(font, texture);
     });
   });
+}
+
+/**
+ * Updates the text x position based on the anchor option
+ */
+ function updateAnchorPosition (text, geometry, anchor) {
+   var x = 0;
+   var layout = geometry.layout;
+
+  switch (anchor) {
+    case 'right':
+      x = -layout.width;
+      break;
+    case 'center':
+      x = -layout.width / 2;
+    case 'left':
+    default:
+      x = 0;
+  }
+
+  text.position.x = Math.abs(text.scale.x) * x;
+  geometry.computeBoundingSphere();
 }

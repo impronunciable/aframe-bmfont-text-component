@@ -13,6 +13,7 @@ This component is useful for rendering bitmap and signed distance field font tex
 |      text     |  the text you want to appear |          None         |
 |     width     |     width of the text box    |          None         |
 |     align     |   'left', 'center', 'right'  |          left         |
+|     anchor    |   'left', 'center', 'right'  |          left         |
 | letterSpacing | the letter spacing in pixels |           0           |
 |   lineHeight  |   the line height in pixels  |           38          |
 |      fnt      |      path to 'fnt' file      | https://cdn.rawgit... |
